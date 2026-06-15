@@ -23,6 +23,7 @@
   height: 100%;
   object-fit: cover;
   animation: heroFade 2s ease;
+  z-index: 0;
 }
 
 @keyframes heroFade {
@@ -51,7 +52,7 @@
   left: 12%;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 2;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -87,7 +88,7 @@
   line-height: 1;
   opacity: 0.65;
   animation: hero-bounce 1.6s infinite;
-  z-index: 3;
+  z-index: 4;
 }
 
 @keyframes hero-bounce {
@@ -172,5 +173,49 @@ body {
   }
   50% {
     transform: translate3d(0, -6px, 0);
+  }
+}
+
+.film-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.05) 0px,
+      rgba(255,255,255,0.05) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    radial-gradient(circle at 30% 20%, rgba(255,255,255,0.12), transparent 22%),
+    radial-gradient(circle at 70% 80%, rgba(0,0,0,0.18), transparent 28%);
+
+  animation:
+    filmFlicker 0.18s steps(2) infinite,
+    filmDrift 8s linear infinite;
+}
+
+@keyframes filmFlicker {
+  0%, 100% {
+    opacity: 0.12;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.2;
+    filter: brightness(1.06);
+  }
+}
+
+@keyframes filmDrift {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(8px);
   }
 }

@@ -144,7 +144,9 @@
   </video>
 
   <div class="hero-dark-overlay"></div>
-
+  
+  <div class="film-overlay"></div>
+  
   <div class="hero-title">
     <h1>Jimmy Dai</h1>
     <div class="hero-scroll">↓</div>
@@ -160,11 +162,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const video = document.querySelector(".hero-bg-video");
   if (!video) return;
   video.addEventListener("loadedmetadata", () => {
-    const stopTime = 2500 + Math.random() * 2500;
+  
+    const playLength =
+    1.5 + Math.random() * 1.5;
+    const start =
+    Math.random() * (video.duration - playLength);
+    video.currentTime = start;
+    video.play();
     setTimeout(() => {
-        video.pause();
-    }, stopTime);
-});
+      video.pause();
+    }, playLength * 1000);
+  });
+
 });
 </script>
 </section>
