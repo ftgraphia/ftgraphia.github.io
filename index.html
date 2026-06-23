@@ -144,38 +144,159 @@
   </video>
 
   <div class="hero-dark-overlay"></div>
-  
   <div class="film-overlay"></div>
-  
+
   <div class="hero-title">
-    <h1>Jimmy Dai</h1>
+    <h1 class="hero-name" aria-label="Jimmy Dai">
+      <span class="hero-letter" data-letter="J">J</span><span class="hero-letter" data-letter="I">i</span><span class="hero-letter" data-letter="M">m</span><span class="hero-letter" data-letter="M">m</span><span class="hero-letter" data-letter="Y">y</span>
+      <span class="hero-dai">Dai</span>
+    </h1>
+
     <div class="hero-scroll">↓</div>
-    <p>
-      Explore freely.<br>
-      Some things only appear along the way.
-    </p>
+
+    <div class="hero-concept">
+      <div class="hero-concept-word" id="hero-concept-word">Explore freely.</div>
+      <div class="hero-concept-desc" id="hero-concept-desc">Some things only appear along the way.</div>
+    </div>
   </div>
 </div>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.querySelector(".hero-bg-video");
-  if (!video) return;
+  const letters = document.querySelectorAll(".hero-letter");
+  const conceptWord = document.querySelector("#hero-concept-word");
+  const conceptDesc = document.querySelector("#hero-concept-desc");
+
+  if (!video || !letters.length || !conceptWord || !conceptDesc) return;
+
+  const timeline = [{"start":0.0,"end":0.117,"album":"Monomial"},{"start":0.117,"end":0.233,"album":"Yardstick Metric"},{"start":0.233,"end":0.35,"album":"Monomial"},{"start":0.35,"end":0.467,"album":"Intersection"},{"start":0.467,"end":0.583,"album":"Jacobi Matrix"},{"start":0.583,"end":0.7,"album":"Mode"},{"start":0.7,"end":0.817,"album":"Monomial"},{"start":0.817,"end":0.933,"album":"Yardstick Metric"},{"start":0.933,"end":1.05,"album":"Jacobi Matrix"},{"start":1.05,"end":1.167,"album":"Magnitude"},{"start":1.167,"end":1.283,"album":"Intersection"},{"start":1.283,"end":1.4,"album":"Monomial"},{"start":1.4,"end":1.517,"album":"Monomial"},{"start":1.517,"end":1.633,"album":"Monomial"},{"start":1.633,"end":1.75,"album":"Monomial"},{"start":1.75,"end":1.867,"album":"Monomial"},{"start":1.867,"end":1.983,"album":"Yardstick Metric"},{"start":1.983,"end":2.1,"album":"Yardstick Metric"},{"start":2.1,"end":2.217,"album":"Jacobi Matrix"},{"start":2.217,"end":2.333,"album":"Mode"},{"start":2.333,"end":2.45,"album":"Mode"},{"start":2.45,"end":2.567,"album":"Mode"},{"start":2.567,"end":2.683,"album":"Jacobi Matrix"},{"start":2.683,"end":2.8,"album":"Jacobi Matrix"},{"start":2.8,"end":2.917,"album":"Yardstick Metric"},{"start":2.917,"end":3.033,"album":"Jacobi Matrix"},{"start":3.033,"end":3.15,"album":"Intersection"},{"start":3.15,"end":3.267,"album":"Intersection"},{"start":3.267,"end":3.383,"album":"Monomial"},{"start":3.383,"end":3.5,"album":"Yardstick Metric"},{"start":3.5,"end":3.617,"album":"Magnitude"},{"start":3.617,"end":3.733,"album":"Monomial"},{"start":3.733,"end":3.85,"album":"Jacobi Matrix"},{"start":3.85,"end":3.967,"album":"Monomial"},{"start":3.967,"end":4.083,"album":"Jacobi Matrix"},{"start":4.083,"end":4.2,"album":"Intersection"},{"start":4.2,"end":4.317,"album":"Monomial"},{"start":4.317,"end":4.433,"album":"Monomial"},{"start":4.433,"end":4.55,"album":"Monomial"},{"start":4.55,"end":4.667,"album":"Monomial"},{"start":4.667,"end":4.783,"album":"Yardstick Metric"},{"start":4.783,"end":4.9,"album":"Intersection"},{"start":4.9,"end":5.017,"album":"Jacobi Matrix"},{"start":5.017,"end":5.133,"album":"Monomial"},{"start":5.133,"end":5.25,"album":"Jacobi Matrix"},{"start":5.25,"end":5.367,"album":"Monomial"},{"start":5.367,"end":5.483,"album":"Monomial"},{"start":5.483,"end":5.6,"album":"Monomial"},{"start":5.6,"end":5.717,"album":"Mode"},{"start":5.717,"end":5.833,"album":"Jacobi Matrix"},{"start":5.833,"end":5.95,"album":"Monomial"},{"start":5.95,"end":6.067,"album":"Monomial"},{"start":6.067,"end":6.183,"album":"Jacobi Matrix"},{"start":6.183,"end":6.3,"album":"Intersection"},{"start":6.3,"end":6.417,"album":"Jacobi Matrix"},{"start":6.417,"end":6.533,"album":"Yardstick Metric"},{"start":6.533,"end":6.65,"album":"Mode"},{"start":6.65,"end":6.767,"album":"Jacobi Matrix"},{"start":6.767,"end":6.883,"album":"Yardstick Metric"},{"start":6.883,"end":7.0,"album":"Mode"},{"start":7.0,"end":7.117,"album":"Intersection"},{"start":7.117,"end":7.233,"album":"Intersection"},{"start":7.233,"end":7.35,"album":"Jacobi Matrix"},{"start":7.35,"end":7.467,"album":"Intersection"},{"start":7.467,"end":7.583,"album":"Yardstick Metric"},{"start":7.583,"end":7.7,"album":"Mode"},{"start":7.7,"end":7.817,"album":"Monomial"},{"start":7.817,"end":7.933,"album":"Monomial"},{"start":7.933,"end":8.05,"album":"Jacobi Matrix"},{"start":8.05,"end":8.167,"album":"Monomial"},{"start":8.167,"end":8.283,"album":"Intersection"},{"start":8.283,"end":8.4,"album":"Intersection"},{"start":8.4,"end":8.517,"album":"Yardstick Metric"},{"start":8.517,"end":8.633,"album":"Jacobi Matrix"},{"start":8.633,"end":8.75,"album":"Jacobi Matrix"},{"start":8.75,"end":8.867,"album":"Magnitude"},{"start":8.867,"end":8.983,"album":"Monomial"},{"start":8.983,"end":9.1,"album":"Monomial"},{"start":9.1,"end":9.217,"album":"Intersection"},{"start":9.217,"end":9.333,"album":"Monomial"},{"start":9.333,"end":9.45,"album":"Intersection"},{"start":9.45,"end":9.567,"album":"Yardstick Metric"},{"start":9.567,"end":9.683,"album":"Monomial"},{"start":9.683,"end":9.8,"album":"Magnitude"},{"start":9.8,"end":9.917,"album":"Yardstick Metric"},{"start":9.917,"end":10.033,"album":"Mode"},{"start":10.033,"end":10.15,"album":"Monomial"},{"start":10.15,"end":10.267,"album":"Monomial"},{"start":10.267,"end":10.383,"album":"Mode"},{"start":10.383,"end":10.5,"album":"Yardstick Metric"},{"start":10.5,"end":10.617,"album":"Yardstick Metric"},{"start":10.617,"end":10.733,"album":"Mode"},{"start":10.733,"end":10.85,"album":"Magnitude"},{"start":10.85,"end":10.967,"album":"Magnitude"},{"start":10.967,"end":11.083,"album":"Monomial"},{"start":11.083,"end":11.2,"album":"Intersection"},{"start":11.2,"end":11.317,"album":"Monomial"},{"start":11.317,"end":11.433,"album":"Monomial"},{"start":11.433,"end":11.55,"album":"Monomial"},{"start":11.55,"end":11.667,"album":"Monomial"},{"start":11.667,"end":11.783,"album":"Intersection"},{"start":11.783,"end":11.9,"album":"Intersection"},{"start":11.9,"end":12.017,"album":"Magnitude"},{"start":12.017,"end":12.133,"album":"Magnitude"},{"start":12.133,"end":12.25,"album":"Jacobi Matrix"},{"start":12.25,"end":12.367,"album":"Monomial"},{"start":12.367,"end":12.483,"album":"Mode"},{"start":12.483,"end":12.6,"album":"Monomial"},{"start":12.6,"end":12.717,"album":"Magnitude"},{"start":12.717,"end":12.833,"album":"Magnitude"},{"start":12.833,"end":12.95,"album":"Monomial"},{"start":12.95,"end":13.067,"album":"Magnitude"},{"start":13.067,"end":13.183,"album":"Monomial"},{"start":13.183,"end":13.3,"album":"Monomial"},{"start":13.3,"end":13.417,"album":"Monomial"},{"start":13.417,"end":13.533,"album":"Monomial"},{"start":13.533,"end":13.65,"album":"Intersection"},{"start":13.65,"end":13.767,"album":"Mode"},{"start":13.767,"end":13.883,"album":"Magnitude"},{"start":13.883,"end":14.0,"album":"Magnitude"},{"start":14.0,"end":14.117,"album":"Magnitude"},{"start":14.117,"end":14.233,"album":"Magnitude"},{"start":14.233,"end":14.35,"album":"Magnitude"},{"start":14.35,"end":14.467,"album":"Intersection"},{"start":14.467,"end":14.583,"album":"Intersection"},{"start":14.583,"end":14.7,"album":"Magnitude"},{"start":14.7,"end":14.817,"album":"Intersection"},{"start":14.817,"end":14.933,"album":"Monomial"},{"start":14.933,"end":15.05,"album":"Mode"},{"start":15.05,"end":15.167,"album":"Magnitude"},{"start":15.167,"end":15.283,"album":"Magnitude"},{"start":15.283,"end":15.4,"album":"Magnitude"},{"start":15.4,"end":15.517,"album":"Magnitude"},{"start":15.517,"end":15.633,"album":"Jacobi Matrix"},{"start":15.633,"end":15.75,"album":"Monomial"},{"start":15.75,"end":15.867,"album":"Mode"},{"start":15.867,"end":15.983,"album":"Monomial"},{"start":15.983,"end":16.1,"album":"Jacobi Matrix"},{"start":16.1,"end":16.217,"album":"Jacobi Matrix"},{"start":16.217,"end":16.333,"album":"Jacobi Matrix"},{"start":16.333,"end":16.45,"album":"Intersection"},{"start":16.45,"end":16.567,"album":"Monomial"},{"start":16.567,"end":16.683,"album":"Monomial"},{"start":16.683,"end":16.8,"album":"Intersection"},{"start":16.8,"end":16.917,"album":"Intersection"},{"start":16.917,"end":17.033,"album":"Intersection"},{"start":17.033,"end":17.15,"album":"Yardstick Metric"},{"start":17.15,"end":17.267,"album":"Yardstick Metric"},{"start":17.267,"end":17.383,"album":"Monomial"},{"start":17.383,"end":17.5,"album":"Yardstick Metric"},{"start":17.5,"end":17.617,"album":"Monomial"},{"start":17.617,"end":17.733,"album":"Monomial"},{"start":17.733,"end":17.85,"album":"Intersection"},{"start":17.85,"end":17.967,"album":"Mode"},{"start":17.967,"end":18.083,"album":"Yardstick Metric"},{"start":18.083,"end":18.2,"album":"Yardstick Metric"},{"start":18.2,"end":18.317,"album":"Monomial"},{"start":18.317,"end":18.433,"album":"Monomial"},{"start":18.433,"end":18.55,"album":"Monomial"},{"start":18.55,"end":18.667,"album":"Jacobi Matrix"},{"start":18.667,"end":18.783,"album":"Monomial"},{"start":18.783,"end":18.9,"album":"Yardstick Metric"},{"start":18.9,"end":19.017,"album":"Intersection"},{"start":19.017,"end":19.133,"album":"Monomial"},{"start":19.133,"end":19.25,"album":"Jacobi Matrix"},{"start":19.25,"end":19.367,"album":"Monomial"},{"start":19.367,"end":19.483,"album":"Jacobi Matrix"},{"start":19.483,"end":19.6,"album":"Monomial"},{"start":19.6,"end":19.717,"album":"Yardstick Metric"},{"start":19.717,"end":19.833,"album":"Intersection"},{"start":19.833,"end":19.95,"album":"Monomial"},{"start":19.95,"end":20.067,"album":"Yardstick Metric"},{"start":20.067,"end":20.183,"album":"Yardstick Metric"},{"start":20.183,"end":20.3,"album":"Magnitude"},{"start":20.3,"end":20.417,"album":"Jacobi Matrix"},{"start":20.417,"end":20.533,"album":"Intersection"},{"start":20.533,"end":20.65,"album":"Magnitude"},{"start":20.65,"end":20.767,"album":"Magnitude"},{"start":20.883,"end":21.0,"album":"Magnitude"},{"start":21.0,"end":21.117,"album":"Jacobi Matrix"},{"start":21.117,"end":21.233,"album":"Yardstick Metric"},{"start":21.233,"end":21.35,"album":"Intersection"},{"start":21.35,"end":21.467,"album":"Yardstick Metric"},{"start":21.467,"end":21.583,"album":"Intersection"},{"start":21.583,"end":21.7,"album":"Intersection"},{"start":21.7,"end":21.817,"album":"Monomial"},{"start":21.817,"end":21.933,"album":"Monomial"},{"start":21.933,"end":22.05,"album":"Intersection"},{"start":22.05,"end":22.167,"album":"Magnitude"},{"start":22.167,"end":22.283,"album":"Monomial"},{"start":22.283,"end":22.4,"album":"Monomial"},{"start":22.4,"end":22.517,"album":"Mode"},{"start":22.517,"end":22.633,"album":"Yardstick Metric"},{"start":22.633,"end":22.75,"album":"Monomial"},{"start":22.75,"end":22.867,"album":"Mode"},{"start":22.867,"end":22.983,"album":"Intersection"},{"start":22.983,"end":23.1,"album":"Yardstick Metric"},{"start":23.1,"end":23.217,"album":"Intersection"},{"start":23.217,"end":23.333,"album":"Jacobi Matrix"},{"start":23.333,"end":23.45,"album":"Monomial"},{"start":23.45,"end":23.567,"album":"Intersection"},{"start":23.567,"end":23.683,"album":"Yardstick Metric"},{"start":23.683,"end":23.8,"album":"Monomial"},{"start":23.8,"end":23.917,"album":"Yardstick Metric"},{"start":23.917,"end":24.033,"album":"Yardstick Metric"},{"start":24.033,"end":24.15,"album":"Monomial"},{"start":24.15,"end":24.267,"album":"Monomial"},{"start":24.267,"end":24.383,"album":"Monomial"},{"start":24.383,"end":24.5,"album":"Intersection"},{"start":24.5,"end":24.617,"album":"Mode"},{"start":24.617,"end":24.733,"album":"Yardstick Metric"},{"start":24.733,"end":24.85,"album":"Intersection"},{"start":24.85,"end":24.967,"album":"Mode"},{"start":24.967,"end":25.083,"album":"Monomial"},{"start":25.083,"end":25.2,"album":"Yardstick Metric"},{"start":25.2,"end":25.317,"album":"Monomial"},{"start":25.317,"end":25.433,"album":"Mode"},{"start":25.433,"end":25.55,"album":"Mode"},{"start":25.55,"end":25.667,"album":"Mode"},{"start":25.667,"end":25.783,"album":"Monomial"},{"start":25.783,"end":25.9,"album":"Intersection"},{"start":25.9,"end":26.017,"album":"Mode"},{"start":26.017,"end":26.133,"album":"Monomial"},{"start":26.133,"end":26.25,"album":"Jacobi Matrix"},{"start":26.25,"end":26.367,"album":"Monomial"},{"start":26.367,"end":26.483,"album":"Yardstick Metric"},{"start":26.483,"end":26.6,"album":"Monomial"},{"start":26.6,"end":26.717,"album":"Jacobi Matrix"},{"start":26.717,"end":26.833,"album":"Intersection"},{"start":26.833,"end":26.95,"album":"Intersection"},{"start":26.95,"end":27.067,"album":"Jacobi Matrix"},{"start":27.067,"end":27.183,"album":"Jacobi Matrix"},{"start":27.183,"end":27.3,"album":"Mode"},{"start":27.3,"end":27.417,"album":"Jacobi Matrix"},{"start":27.417,"end":27.533,"album":"Intersection"},{"start":27.533,"end":27.65,"album":"Jacobi Matrix"},{"start":27.65,"end":27.767,"album":"Intersection"},{"start":27.767,"end":27.883,"album":"Yardstick Metric"},{"start":27.883,"end":28.0,"album":"Jacobi Matrix"},{"start":28.0,"end":28.117,"album":"Jacobi Matrix"},{"start":28.117,"end":28.233,"album":"Mode"},{"start":28.233,"end":28.35,"album":"Mode"},{"start":28.35,"end":28.467,"album":"Intersection"},{"start":28.467,"end":28.583,"album":"Mode"},{"start":28.583,"end":28.7,"album":"Yardstick Metric"},{"start":28.7,"end":28.817,"album":"Jacobi Matrix"},{"start":28.817,"end":28.933,"album":"Monomial"},{"start":28.933,"end":29.05,"album":"Monomial"},{"start":29.05,"end":29.167,"album":"Monomial"},{"start":29.167,"end":29.283,"album":"Jacobi Matrix"},{"start":29.283,"end":29.4,"album":"Jacobi Matrix"},{"start":29.4,"end":29.517,"album":"Jacobi Matrix"},{"start":29.517,"end":29.633,"album":"Mode"},{"start":29.633,"end":29.75,"album":"Intersection"},{"start":29.75,"end":29.867,"album":"Monomial"},{"start":29.867,"end":29.983,"album":"Mode"},{"start":29.983,"end":30.1,"album":"Yardstick Metric"},{"start":30.1,"end":30.217,"album":"Mode"},{"start":30.217,"end":30.333,"album":"Jacobi Matrix"},{"start":30.333,"end":30.45,"album":"Intersection"},{"start":30.45,"end":30.567,"album":"Magnitude"},{"start":30.567,"end":30.683,"album":"Monomial"},{"start":30.683,"end":30.8,"album":"Mode"},{"start":30.8,"end":30.917,"album":"Monomial"},{"start":30.917,"end":31.033,"album":"Monomial"},{"start":31.033,"end":31.15,"album":"Jacobi Matrix"},{"start":31.15,"end":31.267,"album":"Intersection"},{"start":31.267,"end":31.383,"album":"Intersection"},{"start":31.383,"end":31.5,"album":"Monomial"},{"start":31.5,"end":31.617,"album":"Intersection"},{"start":31.617,"end":31.733,"album":"Monomial"}];
+
+  const albumInfo = {
+    "Jacobi Matrix": {
+      letter: "J",
+      word: "Jacobi Matrix",
+      desc: "Perspective, viewpoint change, and visual transformation."
+    },
+    "Intersection": {
+      letter: "I",
+      word: "Intersection",
+      desc: "Lines, objects, or people meeting in the frame."
+    },
+    "Mode": {
+      letter: "M",
+      word: "Mode",
+      desc: "A repeated pattern, with something that stands apart."
+    },
+    "Magnitude": {
+      letter: "M",
+      word: "Magnitude",
+      desc: "Direction, motion, force, or visual intensity."
+    },
+    "Monomial": {
+      letter: "M",
+      word: "Monomial",
+      desc: "One clear subject dominates the composition."
+    },
+    "Yardstick Metric": {
+      letter: "Y",
+      word: "Yardstick Metric",
+      desc: "Scale, distance, and size relationships."
+    }
+  };
+
+  const timelineEnd = timeline.length ? timeline[timeline.length - 1].end : 0;
+  let currentAlbum = "";
+
+  function getAlbumAtTime(time) {
+    if (!timeline.length) return "";
+
+    const t = timelineEnd > 0 ? time % timelineEnd : time;
+
+    let lo = 0;
+    let hi = timeline.length - 1;
+
+    while (lo <= hi) {
+      const mid = Math.floor((lo + hi) / 2);
+      const item = timeline[mid];
+
+      if (t < item.start) {
+        hi = mid - 1;
+      } else if (t >= item.end) {
+        lo = mid + 1;
+      } else {
+        return item.album;
+      }
+    }
+
+    return timeline[timeline.length - 1].album;
+  }
+
+  function setAlbum(album) {
+    if (!album || album === currentAlbum) return;
+
+    currentAlbum = album;
+
+    const info = albumInfo[album];
+    if (!info) return;
+
+    letters.forEach((letter) => {
+      letter.classList.remove("active");
+    });
+
+    if (info.letter === "M") {
+      const mLetters = Array.from(letters).filter((letter) => letter.dataset.letter === "M");
+      if (mLetters.length) {
+        const randomM = mLetters[Math.floor(Math.random() * mLetters.length)];
+        randomM.classList.add("active");
+      }
+    } else {
+      const targetLetter = Array.from(letters).find((letter) => letter.dataset.letter === info.letter);
+      if (targetLetter) {
+        targetLetter.classList.add("active");
+      }
+    }
+
+    conceptWord.textContent = info.word;
+    conceptDesc.textContent = info.desc;
+
+    conceptWord.classList.remove("switching");
+    conceptDesc.classList.remove("switching");
+
+    void conceptWord.offsetWidth;
+    void conceptDesc.offsetWidth;
+
+    conceptWord.classList.add("switching");
+    conceptDesc.classList.add("switching");
+  }
+
+  function syncHeroText() {
+    setAlbum(getAlbumAtTime(video.currentTime));
+    requestAnimationFrame(syncHeroText);
+  }
+
   video.addEventListener("loadedmetadata", () => {
-  
-    const playLength =
-    1.5 + Math.random() * 1.5;
-    const start =
-    Math.random() * (video.duration - playLength);
+    const playLength = 1.5 + Math.random() * 1.5;
+    const usableDuration = Math.min(video.duration || timelineEnd, timelineEnd || video.duration);
+    const maxStart = Math.max(0, usableDuration - playLength);
+    const start = Math.random() * maxStart;
+
     video.currentTime = start;
+    setAlbum(getAlbumAtTime(start));
+
     video.play();
+
     setTimeout(() => {
       video.pause();
+      video.classList.add("paused");
+      setAlbum(getAlbumAtTime(video.currentTime));
     }, playLength * 1000);
   });
 
+  requestAnimationFrame(syncHeroText);
 });
 </script>
+
 </section>
 
 <section class="homepage-posts">

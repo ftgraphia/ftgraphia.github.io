@@ -93,7 +93,7 @@
 
 @keyframes hero-bounce {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(8px); }
+  50% { transform: translateY(4px); }
 }
 
 .homepage-posts {
@@ -178,44 +178,164 @@ body {
 
 .film-overlay {
   position: absolute;
-  inset: 0;
+  left: 0;
+  right: 0;
+  top: -100%;
+  height: 300%;
   z-index: 2;
   pointer-events: none;
-  opacity: 0.16;
-  mix-blend-mode: overlay;
+
+  opacity: 0.18;
+  mix-blend-mode: soft-light;
 
   background:
     repeating-linear-gradient(
       to bottom,
-      rgba(255,255,255,0.05) 0px,
-      rgba(255,255,255,0.05) 1px,
+      rgba(255,255,255,0.08) 0px,
+      rgba(255,255,255,0.08) 1px,
       transparent 1px,
-      transparent 4px
-    ),
-    radial-gradient(circle at 30% 20%, rgba(255,255,255,0.12), transparent 22%),
-    radial-gradient(circle at 70% 80%, rgba(0,0,0,0.18), transparent 28%);
+      transparent 5px
+    );
 
   animation:
-    filmFlicker 0.18s steps(2) infinite,
-    filmDrift 8s linear infinite;
+    filmScan 1.8s linear infinite,
+    filmFlicker 3.5s ease-in-out infinite;
+}
+
+@keyframes filmScan {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(40px);
+  }
 }
 
 @keyframes filmFlicker {
   0%, 100% {
     opacity: 0.12;
-    filter: brightness(1);
+  }
+  45% {
+    opacity: 0.18;
   }
   50% {
-    opacity: 0.2;
-    filter: brightness(1.06);
+    opacity: 0.22;
+  }
+  55% {
+    opacity: 0.15;
   }
 }
 
-@keyframes filmDrift {
+.hero-name {
+  white-space: nowrap;
+}
+
+.hero-letter {
+  display: inline-block;
+  transition:
+    color 0.12s ease,
+    text-shadow 0.12s ease,
+    transform 0.12s ease,
+    opacity 0.12s ease;
+}
+
+.hero-letter.active {
+  color: #ffffff;
+  opacity: 1;
+  transform: translateY(-4px) scale(1.06);
+  text-shadow:
+    0 0 14px rgba(255,255,255,0.65),
+    0 0 34px rgba(255,255,255,0.22);
+}
+
+.hero-dai {
+  display: inline-block;
+  margin-left: 0.22em;
+  opacity: 0.82;
+}
+
+.hero-concept {
+  margin: 0;
+  padding-left: 64px;
+  max-width: 720px;
+  color: rgba(255,255,255,0.88);
+}
+
+.hero-concept-word {
+  font-size: clamp(1.1rem, 1.6vw, 1.55rem);
+  line-height: 1.35;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.hero-concept-desc {
+  margin-top: 0.35rem;
+  font-size: clamp(0.85rem, 1.1vw, 1.05rem);
+  line-height: 1.65;
+  opacity: 0.72;
+}
+
+.hero-concept-word.switching,
+.hero-concept-desc.switching {
+  animation: conceptSwitch 0.22s ease;
+}
+
+@keyframes conceptSwitch {
   from {
+    opacity: 0.35;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
     transform: translateY(0);
   }
-  to {
+}
+
+.hero-bg-video.paused {
+  animation: ambientBreath 8s ease-in-out infinite;
+  animation: heroBreath 8s ease-in-out infinite;
+}
+
+@keyframes ambientBreath {
+  0%, 100% {
+    filter: brightness(1) contrast(1);
+  }
+
+  50% {
+    filter: brightness(1.035) contrast(1.02);
+  }
+}
+
+@keyframes heroBreath {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+
+  50% {
+    transform: scale(1.015);
+    filter: brightness(1.04);
+  }
+
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+.hero-concept {
+  animation: heroConceptFloat 8s ease-in-out infinite;
+}
+
+@keyframes heroConceptFloat {
+  0%,100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  50% {
     transform: translateY(8px);
+    opacity: 0.92;
   }
 }
