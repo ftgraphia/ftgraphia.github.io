@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
-<title>Mode | Hexo</title>
+<title>Monomial | Hexo</title>
 
 
 <meta name="author" content="John Doe">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Mode">
+<meta property="og:title" content="Monomial">
 <meta property="og:site_name" content="Hexo">
 
 <link rel="icon" href="/favicon.png" type="image/png">
-<link rel="canonical" href="http://example.com/albums/mode/index.html">
+<link rel="canonical" href="http://example.com/albums/monomial/index.html">
 
 <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
 
@@ -156,13 +156,193 @@
   </section>
 
   <section class="album-panel" id="album-panel-concept">
-    <div class="album-concept-card">
-      <div class="album-concept-kicker">Concept</div>
-      <h2>Magnitude</h2>
-      <p>Magnitude describes size, length, or strength. In photography, it connects to movement, direction, speed, force, and the feeling that something is pushing through the image.</p>
+
+    
+
+      <section class="concept-lab magnitude-lab">
+  <div class="lab-topline">
+    <span>Concept Lab</span>
+    <span>Magnitude / vector length / visual force</span>
+  </div>
+
+  <div class="lab-layout">
+    <div class="lab-stage">
+      <svg id="magnitude-svg" viewBox="-10 -6 20 12" class="magnitude-svg">
+        <defs>
+          <pattern id="smallGrid" width="1" height="1" patternUnits="userSpaceOnUse">
+            <path d="M 1 0 L 0 0 0 1" class="grid-small"/>
+          </pattern>
+          <pattern id="bigGrid" width="5" height="5" patternUnits="userSpaceOnUse">
+            <rect width="5" height="5" fill="url(#smallGrid)"/>
+            <path d="M 5 0 L 0 0 0 5" class="grid-big"/>
+          </pattern>
+          <marker id="arrowHead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 z" class="vector-head"/>
+          </marker>
+        </defs>
+
+        <rect x="-10" y="-6" width="20" height="12" fill="url(#bigGrid)" />
+        <line x1="-10" y1="0" x2="10" y2="0" class="axis-line"/>
+        <line x1="0" y1="-6" x2="0" y2="6" class="axis-line"/>
+
+        <g class="tick-labels">
+          <text x="9.45" y="0.55">x</text>
+          <text x="0.35" y="-5.35">y</text>
+          <text x="0.22" y="0.55">0</text>
+        </g>
+
+        <line id="vector-shadow" x1="0" y1="0" x2="5" y2="-2.2" class="vector-shadow" />
+        <line id="vector-line" x1="0" y1="0" x2="5" y2="-2.2" class="vector-line" marker-end="url(#arrowHead)" />
+
+        <line id="x-component" x1="0" y1="-2.2" x2="5" y2="-2.2" class="component-line"/>
+        <line id="y-component" x1="5" y1="0" x2="5" y2="-2.2" class="component-line"/>
+
+        <circle cx="0" cy="0" r="0.16" class="origin-dot"/>
+        <circle id="vector-handle" cx="5" cy="-2.2" r="0.34" class="vector-handle"/>
+      </svg>
+
+      <div class="lab-stage-caption">
+        drag endpoint / recalculating magnitude
+      </div>
     </div>
-  </section>
+
+    <aside class="lab-readout">
+      <div class="readout-title">live readout</div>
+
+      <div class="readout-row"><span>vector v</span><strong id="read-vector">(5.00, 2.20)</strong></div>
+      <div class="readout-row"><span>x component</span><strong id="read-x">5.00</strong></div>
+      <div class="readout-row"><span>y component</span><strong id="read-y">2.20</strong></div>
+      <div class="readout-row important"><span>|v| magnitude</span><strong id="read-mag">5.46</strong></div>
+      <div class="readout-row"><span>angle θ</span><strong id="read-angle">23.7°</strong></div>
+      <div class="readout-row"><span>unit direction</span><strong id="read-unit">(0.92, 0.40)</strong></div>
+      <div class="readout-row"><span>visual force</span><strong id="read-force">72%</strong></div>
+
+      <div class="lab-buttons">
+        <button type="button" id="mag-reset">reset</button>
+        <button type="button" id="mag-random">random</button>
+      </div>
+    </aside>
+  </div>
+
+  <div class="lab-note">
+    <span>photographic reading</span>
+    <p>
+      Magnitude is not just size. In this album, it becomes a way to read motion,
+      direction, force, and intensity inside a still frame.
+    </p>
+  </div>
 </section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const svg = document.querySelector("#magnitude-svg");
+  if (!svg) return;
+
+  const line = document.querySelector("#vector-line");
+  const shadow = document.querySelector("#vector-shadow");
+  const handle = document.querySelector("#vector-handle");
+  const xComp = document.querySelector("#x-component");
+  const yComp = document.querySelector("#y-component");
+
+  const readVector = document.querySelector("#read-vector");
+  const readX = document.querySelector("#read-x");
+  const readY = document.querySelector("#read-y");
+  const readMag = document.querySelector("#read-mag");
+  const readAngle = document.querySelector("#read-angle");
+  const readUnit = document.querySelector("#read-unit");
+  const readForce = document.querySelector("#read-force");
+
+  let vx = 5;
+  let vy = 2.2;
+  let dragging = false;
+
+  function clamp(n, min, max) {
+    return Math.max(min, Math.min(max, n));
+  }
+
+  function toSvgPoint(evt) {
+    const pt = svg.createSVGPoint();
+    pt.x = evt.clientX;
+    pt.y = evt.clientY;
+    return pt.matrixTransform(svg.getScreenCTM().inverse());
+  }
+
+  function setVector(x, y) {
+    vx = clamp(x, -9.2, 9.2);
+    vy = clamp(y, -5.4, 5.4);
+
+    const sx = vx;
+    const sy = -vy;
+
+    line.setAttribute("x2", sx);
+    line.setAttribute("y2", sy);
+    shadow.setAttribute("x2", sx);
+    shadow.setAttribute("y2", sy);
+    handle.setAttribute("cx", sx);
+    handle.setAttribute("cy", sy);
+
+    xComp.setAttribute("x1", 0);
+    xComp.setAttribute("y1", sy);
+    xComp.setAttribute("x2", sx);
+    xComp.setAttribute("y2", sy);
+
+    yComp.setAttribute("x1", sx);
+    yComp.setAttribute("y1", 0);
+    yComp.setAttribute("x2", sx);
+    yComp.setAttribute("y2", sy);
+
+    const mag = Math.sqrt(vx * vx + vy * vy);
+    const angle = Math.atan2(vy, vx) * 180 / Math.PI;
+    const ux = mag === 0 ? 0 : vx / mag;
+    const uy = mag === 0 ? 0 : vy / mag;
+    const force = Math.min(100, Math.round((mag / 10.5) * 100));
+
+    readVector.textContent = `(${vx.toFixed(2)}, ${vy.toFixed(2)})`;
+    readX.textContent = vx.toFixed(2);
+    readY.textContent = vy.toFixed(2);
+    readMag.textContent = mag.toFixed(2);
+    readAngle.textContent = `${angle.toFixed(1)}°`;
+    readUnit.textContent = `(${ux.toFixed(2)}, ${uy.toFixed(2)})`;
+    readForce.textContent = `${force}%`;
+  }
+
+  handle.addEventListener("pointerdown", (evt) => {
+    dragging = true;
+    handle.setPointerCapture(evt.pointerId);
+  });
+
+  handle.addEventListener("pointermove", (evt) => {
+    if (!dragging) return;
+    const p = toSvgPoint(evt);
+    setVector(p.x, -p.y);
+  });
+
+  handle.addEventListener("pointerup", () => {
+    dragging = false;
+  });
+
+  svg.addEventListener("pointerdown", (evt) => {
+    if (evt.target === handle) return;
+    const p = toSvgPoint(evt);
+    setVector(p.x, -p.y);
+  });
+
+  document.querySelector("#mag-reset").addEventListener("click", () => {
+    setVector(5, 2.2);
+  });
+
+  document.querySelector("#mag-random").addEventListener("click", () => {
+    setVector(-8 + Math.random() * 16, -4.5 + Math.random() * 9);
+  });
+
+  setVector(vx, vy);
+});
+</script>
+
+
+    
+
+  </section>
 
 <div id="lightbox" class="lightbox">
 
